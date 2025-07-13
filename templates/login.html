@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}
+Iniciar sesión
+{% endblock %}
+
+{% block body %}
+
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+<div style="
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+  ">
+    <div class="card p-4 shadow">
+        <div class="text-center mb-4">
+            <img src="{% static 'images/user.png' %}" alt="Logo" class="img-fluid" style="height: 80px" />
+        </div>
+
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="username" class="form-label fw-bold text-white">Username</label>
+                <input type="text" id="username" name="username" class="form-control" autocomplete="off" required />
+            </div>
+
+            <div class="mb-4 password-wrapper">
+                <label for="password" class="form-label fw-bold text-white">Password</label>
+                <input type="password" id="password" name="password" class="form-control" required />
+            </div>
+
+            <div class="d-grid gap-2 btnLogin">
+                <button type="submit" class="btn">Ingresar</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if error %}
+<script>
+    const form = document.querySelector('.btnLogin')?.closest('form');
+
+    const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 1500,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+        }
+    });
+
+    Toast.fire({
+        icon: "error",
+        title: "{{ error|escapejs }}"
+    });
+</script>
+{% endif %}
+
+
+{% endblock %}

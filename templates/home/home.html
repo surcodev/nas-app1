@@ -1,0 +1,78 @@
+{% extends "../base.html" %}
+{% load static %}
+
+{% block body %}
+{% include "../components/navbar.html" %}
+
+<link rel="stylesheet" href="{% static 'css/home.css' %}">
+
+<div
+    style="background-color: #f5f5f5; padding: 20px; border-radius: 12px; margin-top: 50px; max-width: 500px; margin-left: auto; margin-right: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">
+    <h4 style="color: #000000; margin: 0; text-align: center;">
+        Texto dinámico<span style="font-weight: bold;">
+            {{ request.user.first_name }} {{ request.user.last_name }}</span>
+    </h4>
+</div>
+<div class="container text-center" style="padding-top: 120px;">
+
+    <div class="row justify-content-center align-items-stretch" style="padding-top: 0px;">
+
+        <div class="row justify-content-center align-items-stretch">
+
+
+            <div class="col-6 col-md-3 mb-4">
+                <a href="{% url 'gastos_generales:lista_gasto' %}" class="card-link">
+                    <div class="card h-100 shadow-sm">
+                        <div class="d-flex align-items-center justify-content-center" style="height: 150px;">
+                            <img src="{% static 'images/centro_costos.png' %}" alt="Partidas"
+                                style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-wrap">Gastos Generales</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-md-3 mb-4">
+                <a href="#" class="card-link">
+                    <div class="card h-100 shadow-sm">
+                        <div class="d-flex align-items-center justify-content-center" style="height: 150px;">
+                            <img src="{% static 'images/centro_costos.png' %}" alt="Partidas"
+                                style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-wrap">Salud</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-md-3 mb-4">
+                <a href="#" class="card-link">
+                    <div class="card h-100 shadow-sm">
+                        <div class="d-flex align-items-center justify-content-center" style="height: 150px;">
+                            <img src="{% static 'images/centro_costos.png' %}" alt="Partidas"
+                                style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-wrap">Tarjeta de Crédito</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6 col-md-3 mb-4">
+                <a href="#" class="card-link">
+                    <div class="card h-100 shadow-sm">
+                        <div class="d-flex align-items-center justify-content-center" style="height: 150px;">
+                            <img src="{% static 'images/centro_costos.png' %}" alt="Partidas"
+                                style="max-height: 100%; max-width: 100%; object-fit: contain;">
+                        </div>
+                        <div class="card-body">
+                            <h5 class="card-title text-wrap">Documentos</h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    {% endblock %}

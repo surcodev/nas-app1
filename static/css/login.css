@@ -1,0 +1,55 @@
+body {
+    background-image: url("/static/images/mrrobot2_bw.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 100vh;
+    margin: 0;
+    position: relative;
+}
+
+body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(138, 148, 162, 0.4);
+    z-index: 0;
+}
+
+input:focus {
+    outline: none;
+    border-color: #19b8bb !important;
+    box-shadow: 0 0 3px #19b8bb !important;
+}
+
+input.form-control {
+    border-radius: 0;
+}
+
+button {
+    background: #000 !important;
+    color: white !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+
+/* Estilos para centrar el formulario */
+.centered-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.card {
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.399);
+    backdrop-filter: blur(5px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 10px;
+}
