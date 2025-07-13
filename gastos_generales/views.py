@@ -14,7 +14,7 @@ def lista_gasto(request):
         else:
             print("Errores en el formulario:", form.errors)
 
-    gastos_generales = Gasto.objects.all()
+    gastos_generales = Gasto.objects.all().order_by('-fecha')
 
     return render(request, 'gastos_generales/home.html', {
         'form': form,

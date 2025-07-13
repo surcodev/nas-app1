@@ -112,8 +112,12 @@
                                                         {{ form.categoria }}
                                                     </div>
                                                     <div class="mb-4">
-                                                        <label class="form-label">Precio</label>
-                                                        {{ form.precio }}
+                                                        <label class="form-label">Precio (PEN)</label>
+                                                        {{ form.soles }}
+                                                    </div>
+                                                    <div class="mb-4">
+                                                        <label class="form-label">Precio (USD)</label>
+                                                        {{ form.dolares }}
                                                     </div>
                                                     <div class="mb-4">
                                                         <label class="form-label">Sustento (PDF)</label>
@@ -152,7 +156,8 @@
                                     <th style="color: white;">Fecha</th>
                                     <th style="color: white;">Descripción</th>
                                     <th style="color: white;">Categoría</th>
-                                    <th style="color: white;">Precio</th>
+                                    <th style="color: white;">Precio (PEN)</th>
+                                    <th style="color: white;">Precio (USD)</th>
                                     <th style="color: white;">Sustento</th>
                                     <th style="color: white;">Fecha creación</th>
                                     <th style="color: white;">Acciones</th>
@@ -165,7 +170,8 @@
                                     <td>{{ gg.fecha|date:"d-m-Y" }}</td>
                                     <td>{{ gg.descripcion|default:''|safe }}</td>
                                     <td>{{ gg.categoria|default:''}}</td>
-                                    <td>{{ gg.precio|default:'' }}</td>
+                                    <td>{{ gg.soles|default:'0.0' }}</td>
+                                    <td>{{ gg.dolares|default:'0.0' }}</td>
                                     <td>
                                         {% if gg.sustento %}
                                         <button type="button"
@@ -188,7 +194,8 @@
                                                 data-descripcion="{{ gg.descripcion|default_if_none:'' }}"
                                                 data-categoria="{{ gg.categoria|default_if_none:'' }}"
                                                 data-sustento="{{ gg.sustento.url|default_if_none:'' }}"
-                                                data-precio="{{ gg.precio|default_if_none:'' }}">
+                                                data-soles="{{ gg.soles|default_if_none:'' }}"
+                                                data-soles="{{ gg.dolares|default_if_none:'' }}">
                                                 <i class="bi bi-pencil-square"></i>
                                             </button>
 
@@ -237,9 +244,14 @@
                                                         name="categoria">
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <label for="edit_precio" class="form-label">Precio</label>
-                                                    <input type="number" class="form-control" id="edit_precio"
-                                                        name="precio">
+                                                    <label for="edit_soles" class="form-label">Precio (PEN)</label>
+                                                    <input type="number" class="form-control" id="edit_soles"
+                                                        name="soles">
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <label for="edit_dolares" class="form-label">Precio (USD)</label>
+                                                    <input type="number" class="form-control" id="edit_dolares"
+                                                        name="dolares">
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label for="edit_pdf" class="form-label">Sustento
@@ -251,7 +263,7 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label for="edit_descripcion" class="form-label">Descripción</label>
-                                                    <textarea class="form-control ckeditor" id="edit_descripcion"
+                                                    <textarea class="form-control" id="edit_descripcion"
                                                         name="descripcion"></textarea>
                                                 </div>
 
@@ -287,6 +299,15 @@
                     </div>
 
                     <script>
+                        document.addEventListener("DOMContentLoaded", function () {
+                            tinymce.init({
+                                selector: '#edit_descripcion',  // tu campo textarea
+                                plugins: 'lists link image preview code textcolor',
+                                toolbar: 'undo redo | bold italic underline | forecolor backcolor | alignleft aligncenter alignright | bullist numlist | code',
+                                height: 300
+                            });
+                        });
+
                         document.addEventListener('DOMContentLoaded', function () {
                             document.addEventListener('DOMContentLoaded', function () {
                                 const modal = document.querySelector('#pdfViewerModal .modal-dialog');
@@ -364,15 +385,12 @@
                             editButtons.forEach(button => {
                                 button.addEventListener('click', function () {
                                     document.getElementById('edit_id').value = button.getAttribute('data-id');
-                                    // const observacionHtml = button.getAttribute('data-seguimiento');
-                                    // initCKEditor('edit_id_seguimiento');
-                                    // CKEDITOR.instances['edit_id_seguimiento'].setData(observacionHtml || '');
-
-                                    // const observacionHtml2 = button.getAttribute('data-pendiente');
-                                    // initCKEditor('edit_id_pendiente');
-                                    // CKEDITOR.instances['edit_id_pendiente'].setData(observacionHtml2 || '');
+                                    const observacionHtml = button.getAttribute('data-descripcion');
+                                    // initCKEditor('edit_descripcion');
+                                    // CKEDITOR.instances['edit_descripcion'].setData(observacionHtml || '');
                                     document.getElementById('edit_fecha').value = button.getAttribute('data-fecha');
-                                    document.getElementById('edit_precio').value = button.getAttribute('data-precio');
+                                    document.getElementById('edit_soles').value = button.getAttribute('data-soles');
+                                    document.getElementById('edit_dolares').value = button.getAttribute('data-dolares');
                                     document.getElementById('edit_categoria').value = button.getAttribute('data-categoria');
                                     document.getElementById('sustento_actual').value = button.getAttribute('data-sustento');
 

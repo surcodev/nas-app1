@@ -31,50 +31,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
-    'django_ckeditor_5',
+    'tinymce',
 ]
 
-
-customColorPalette = [
-        {
-            'color': 'hsl(4, 90%, 58%)',
-            'label': 'Red'
-        },
-        {
-            'color': 'hsl(340, 82%, 52%)',
-            'label': 'Pink'
-        },
-        {
-            'color': 'hsl(291, 64%, 42%)',
-            'label': 'Purple'
-        },
-        {
-            'color': 'hsl(262, 52%, 47%)',
-            'label': 'Deep Purple'
-        },
-        {
-            'color': 'hsl(231, 48%, 48%)',
-            'label': 'Indigo'
-        },
-        {
-            'color': 'hsl(207, 90%, 54%)',
-            'label': 'Blue'
-        },
-    ]
-CKEDITOR_5_CUSTOM_CSS = 'css/ckeditor5.css'
-CKEDITOR_5_CONFIGS = {
-    'default': {
-        'blockToolbar': [
-            'blockQuote',
-        ],
-        'toolbar': {
-            'items': ['bold', 'italic', 'link', 'underline', 'fontColor', 'fontBackgroundColor', 'removeFormat',
-                    ],
-            'shouldNotGroupWhenFull': 'true'
-        },
-    },
+TINYMCE_DEFAULT_CONFIG = {
+    'height': 300,
+    'width': 480,
+    'plugins': "textcolor colorpicker",
+    'toolbar': "undo redo | bold italic underline | forecolor backcolor | alignleft aligncenter alignright | bullist numlist | link",
 }
-
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -147,10 +112,9 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
-STATICFILES_DIRS = [
-    BASE_DIR / "static",
-]
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [ BASE_DIR / "static",]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
