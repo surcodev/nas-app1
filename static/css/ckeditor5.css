@@ -1,0 +1,18 @@
+.ck.ck-editor__editable {
+    font-family: 'Arial', sans-serif;
+    font-size: 16px;
+    color: #333;
+}
+
+.ck.ck-toolbar {
+    background-color: #f0f0f0;
+}
+
+.ck.ck-toolbar__items {
+    display: flex;
+    justify-content: center;
+}
+
+.ck.ck-editor__main:focus {
+    border: 1px #19b8bb !important;
+}

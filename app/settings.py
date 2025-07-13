@@ -61,7 +61,7 @@ customColorPalette = [
             'label': 'Blue'
         },
     ]
-CKEDITOR_5_CUSTOM_CSS = 'path_to.css' # optional
+CKEDITOR_5_CUSTOM_CSS = 'css/ckeditor5.css'
 CKEDITOR_5_CONFIGS = {
     'default': {
         'blockToolbar': [

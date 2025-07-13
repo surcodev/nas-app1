@@ -152,8 +152,8 @@
                                     <th style="color: white;">Fecha</th>
                                     <th style="color: white;">Descripción</th>
                                     <th style="color: white;">Categoría</th>
-                                    <th style="color: white;">Sustento</th>
                                     <th style="color: white;">Precio</th>
+                                    <th style="color: white;">Sustento</th>
                                     <th style="color: white;">Fecha creación</th>
                                     <th style="color: white;">Acciones</th>
                                 </tr>
@@ -165,6 +165,7 @@
                                     <td>{{ gg.fecha|date:"d-m-Y" }}</td>
                                     <td>{{ gg.descripcion|default:''|safe }}</td>
                                     <td>{{ gg.categoria|default:''}}</td>
+                                    <td>{{ gg.precio|default:'' }}</td>
                                     <td>
                                         {% if gg.sustento %}
                                         <button type="button"
@@ -177,25 +178,17 @@
                                         No disponible
                                         {% endif %}
                                     </td>
-                                    <td>{{ gg.precio|default:'' }}</td>
                                     <td>{{ gg.creado_en|default:"" }}</td>
                                     <td class="action-column">
                                         <div class="btn-group" role="group">
                                             <button type="button" class="btn btn-sm text-white me-2 btn-editar"
                                                 style="background-color: #434c5e;" data-bs-toggle="modal"
-                                                data-bs-target="#editGastoModal" data-id="{{ cj.id }}"
-                                                data-codigo="{{ cj.codigo|default_if_none:'' }}"
-                                                data-expediente="{{ cj.expediente|default_if_none:'' }}"
-                                                data-sede="{{ cj.sede|default_if_none:'' }}"
-                                                data-especialidad="{{ cj.especialidad|default_if_none:'' }}"
-                                                data-materia="{{ cj.materia|default_if_none:'' }}"
-                                                data-juzgado="{{ cj.juzgado|default_if_none:'' }}"
-                                                data-demandante="{{ cj.demandante|default_if_none:'' }}"
-                                                data-demandado="{{ cj.demandado|default_if_none:'' }}"
-                                                data-anioinicio="{{ cj.anio_inicio|default_if_none:'' }}"
-                                                data-representante="{{ cj.representante }}"
-                                                data-tlfjuzgado="{% with cj.seguimientos.all|dictsortreversed:'fecha_seguimiento'|first as ult %}{{ ult.pendiente|default_if_none:''|striptags }}{% endwith %}"
-                                                data-seguimiento-id="{% with cj.seguimientos_ordenados.0 as ult %}{{ ult.id }}{% endwith %}">
+                                                data-bs-target="#editGastoModal" data-id="{{ gg.id }}"
+                                                data-fecha="{{ gg.fecha|date:'Y-m-d' }}"
+                                                data-descripcion="{{ gg.descripcion|default_if_none:'' }}"
+                                                data-categoria="{{ gg.categoria|default_if_none:'' }}"
+                                                data-sustento="{{ gg.sustento.url|default_if_none:'' }}"
+                                                data-precio="{{ gg.precio|default_if_none:'' }}">
                                                 <i class="bi bi-pencil-square"></i>
                                             </button>
 
@@ -230,14 +223,12 @@
                                     <form method="POST" action="#">
                                         {% csrf_token %}
                                         <input type="hidden" id="edit_id" name="id">
-                                        <input type="hidden" id="edit_seguimiento_id" name="seguimiento_id">
-
                                         <div class="container">
                                             <div class="row g-3">
                                                 <!-- Primera Fila -->
                                                 <div class="col-md-4">
                                                     <label for="edit_fecha" class="form-label">Fecha</label>
-                                                    <input type="text" class="form-control" id="edit_fecha"
+                                                    <input type="date" class="form-control" id="edit_fecha"
                                                         name="fecha">
                                                 </div>
                                                 <div class="col-md-4">
@@ -247,14 +238,16 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label for="edit_precio" class="form-label">Precio</label>
-                                                    <input type="text" class="form-control" id="edit_precio"
+                                                    <input type="number" class="form-control" id="edit_precio"
                                                         name="precio">
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label for="edit_pdf" class="form-label">Sustento
                                                         (PDF)</label>
-                                                    <input type="text" class="form-control" id="edit_pdf"
+                                                    <input type="file" class="form-control" id="edit_sustento"
                                                         name="sustento">
+                                                    <input type="hidden" name="sustento_actual" id="sustento_actual">
+
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label for="edit_descripcion" class="form-label">Descripción</label>
@@ -274,7 +267,6 @@
                             </div>
                         </div>
                     </div>
-
 
                     <!-- Modal para ver PDF -->
                     <div class="modal fade" id="pdfViewerModal" tabindex="-1" aria-labelledby="pdfViewerModalLabel"
@@ -296,8 +288,6 @@
 
                     <script>
                         document.addEventListener('DOMContentLoaded', function () {
-
-
                             document.addEventListener('DOMContentLoaded', function () {
                                 const modal = document.querySelector('#pdfViewerModal .modal-dialog');
                                 const header = document.getElementById('pdfModalHeader');
@@ -369,52 +359,24 @@
                                 iframe.src = '';
                             });
 
-                            // EDITAR REGISTRO
-                            const editButtons = document.querySelectorAll('.btn-editar, .btn-editar-gasto, .btn-editar-presentacion');
+                            // EDITAR REGISTRO GASTO
+                            const editButtons = document.querySelectorAll('.btn-editar');
                             editButtons.forEach(button => {
                                 button.addEventListener('click', function () {
-                                    // Seguimiento
                                     document.getElementById('edit_id').value = button.getAttribute('data-id');
-                                    const interValue = button.getAttribute('data-inter');
-                                    console.log('Valor de data-inter:', interValue);
-                                    document.getElementById('edit_id_inter').checked = interValue === 'true';
-                                    document.getElementById('edit_id_resolucion').value = button.getAttribute('data-resolucion');
-                                    //document.getElementById('edit_id_seguimiento').value = button.getAttribute('data-seguimiento');
-                                    const observacionHtml = button.getAttribute('data-seguimiento');
-                                    initCKEditor('edit_id_seguimiento');
-                                    CKEDITOR.instances['edit_id_seguimiento'].setData(observacionHtml || '');
+                                    // const observacionHtml = button.getAttribute('data-seguimiento');
+                                    // initCKEditor('edit_id_seguimiento');
+                                    // CKEDITOR.instances['edit_id_seguimiento'].setData(observacionHtml || '');
 
-                                    //document.getElementById('edit_id_pendiente').value = button.getAttribute('data-pendiente');
-                                    const observacionHtml2 = button.getAttribute('data-pendiente');
-                                    initCKEditor('edit_id_pendiente');
-                                    CKEDITOR.instances['edit_id_pendiente'].setData(observacionHtml2 || '');
-
-                                    document.getElementById('edit_id_responsable').value = button.getAttribute('data-responsable');
-                                    document.getElementById('edit_id_estado').value = button.getAttribute('data-estado');
-                                    document.getElementById('edit_id_fecha_seguimiento').value = button.getAttribute('data-fecha_seguimiento');
-                                    document.getElementById('edit_id_fecha_pendiente').value = button.getAttribute('data-fecha_pendiente');
-
-                                    // Gasto
-                                    document.getElementById('edit_id_codigo_pago').value = button.getAttribute('data-codigo_pago');
-                                    document.getElementById('edit_id_gasto').value = button.getAttribute('data-id_gasto');
-                                    document.getElementById('edit_id_fecha').value = button.getAttribute('data-fecha');
-                                    document.getElementById('edit_id_detalle').value = button.getAttribute('data-detalle');
-                                    document.getElementById('edit_gastos_soles').value = button.getAttribute('data-gastos_soles');
-                                    document.getElementById('edit_gastos_dolares').value = button.getAttribute('data-gastos_dolares');
-                                    document.getElementById('edit_id_pdf').value = button.getAttribute('data-pdf');
-
-                                    // Presentacion
+                                    // const observacionHtml2 = button.getAttribute('data-pendiente');
+                                    // initCKEditor('edit_id_pendiente');
+                                    // CKEDITOR.instances['edit_id_pendiente'].setData(observacionHtml2 || '');
                                     document.getElementById('edit_fecha').value = button.getAttribute('data-fecha');
-                                    document.getElementById('edit_presentado').value = button.getAttribute('data-presentado');
-                                    document.getElementById('edit_escrito').value = button.getAttribute('data-escrito');
-                                    document.getElementById('edit_id_presentacion').value = button.getAttribute('data-idp');
+                                    document.getElementById('edit_precio').value = button.getAttribute('data-precio');
+                                    document.getElementById('edit_categoria').value = button.getAttribute('data-categoria');
+                                    document.getElementById('sustento_actual').value = button.getAttribute('data-sustento');
 
-                                    // Gasto Presentacion
 
-                                    console.log('Id:', document.getElementById('edit_id_presentacion').value);
-                                    console.log('Fecha:', document.getElementById('edit_fecha').value);
-                                    console.log('Presentado:', document.getElementById('edit_presentado').value);
-                                    console.log('Escrito:', document.getElementById('edit_escrito').value);
                                 });
                             });
 
