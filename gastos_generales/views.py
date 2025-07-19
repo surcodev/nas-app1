@@ -26,3 +26,19 @@ def eliminar_gasto(request, id):
     registro = get_object_or_404(Gasto, id=id)
     registro.delete()
     return redirect('gastos_generales:lista_gasto')
+
+@login_required
+def editar_gasto(request):
+    if request.method == 'POST':
+        id = request.POST.get('id')
+        gasto_general = get_object_or_404(Gasto, id=id)
+
+        form = GastoForm(request.POST, request.FILES, instance=gasto_general)
+        if form.is_valid():
+            form.save()
+            return redirect('gastos_generales:lista_gasto')
+        else:
+            print(form.errors)
+            return redirect('gastos_generales:lista_gasto')
+
+    return redirect('gastos_generales:lista_gasto')

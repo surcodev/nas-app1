@@ -3,7 +3,6 @@ from .models import Gasto
 from tinymce.widgets import TinyMCE
 
 class GastoForm(forms.ModelForm):
-    descripcion = forms.CharField(widget=TinyMCE(attrs={'cols': 30, 'rows': 10}))
     class Meta:
         model = Gasto
         fields = '__all__'
@@ -15,6 +14,5 @@ class GastoForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         for name, field in self.fields.items():
-            if name != 'descripcion':
-                field.widget.attrs['class'] = 'form-control'
-                field.widget.attrs['autocomplete'] = 'off'
+            field.widget.attrs['class'] = 'form-control'
+            field.widget.attrs['autocomplete'] = 'off'

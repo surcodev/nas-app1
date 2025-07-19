@@ -1,8 +1,7 @@
 from django.db import models
-from tinymce.models import HTMLField
 
 class Gasto(models.Model):
-    descripcion = HTMLField()
+    descripcion = models.TextField()
     categoria = models.CharField(max_length=50)
     soles = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     dolares = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)

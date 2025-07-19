@@ -3,10 +3,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-u25oh#7a=r9wi-o$8*z+0&ernweij3356!1q(3z$3%rj811x^_'
 
@@ -16,7 +12,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 #SECURE_CROSS_ORIGIN_OPENER_POLICY = None
 #SECURE_CROSS_ORIGIN_EMBEDDER_POLICY = None
-X_FRAME_OPTIONS = 'SAMEORIGIN'
+# X_FRAME_OPTIONS = 'SAMEORIGIN'
 
 
 # Application definition
@@ -31,15 +27,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
-    'tinymce',
+    'widget_tweaks',
 ]
-
-TINYMCE_DEFAULT_CONFIG = {
-    'height': 300,
-    'width': 480,
-    'plugins': "textcolor colorpicker",
-    'toolbar': "undo redo | bold italic underline | forecolor backcolor | alignleft aligncenter alignright | bullist numlist | link",
-}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -100,7 +89,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-pe'
+LANGUAGE_CODE = 'es-pe'
 
 TIME_ZONE = 'America/Lima'
 
