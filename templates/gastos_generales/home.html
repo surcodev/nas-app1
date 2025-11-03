@@ -2,6 +2,10 @@
 
 {% block title %} Lista de Gastos {% endblock %}
 
+{% load static %}
+<script src="{% static 'tinymce/tinymce.min.js' %}"></script>
+
+
 {% block body %}
 {% include "../components/navbar.html" %}
 
@@ -146,6 +150,8 @@
     </div>
 
 </div>
+
+
 <!-- Modal para editar Gasto -->
 <div class="modal fade" id="editGastoModal" aria-labelledby="editGastoModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -252,11 +258,11 @@
                                 {{ form.sustento }}
                             </div>
 
+                            {{ form.media }}
                             <!-- Descripción (campo grande) -->
                             <div class="col-12 mb-3">
                                 <label class="form-label">Descripción</label>
-                                {% load widget_tweaks %}
-                                {{ form.descripcion|add_class:"descripcion-textarea" }}
+                                {{ form.descripcion }}
                             </div>
                         </div>
 
@@ -268,8 +274,7 @@
                             </button>
                         </div>
                     </div>
-                </form>
-
+                </form> 
             </div>
         </div>
     </div>
@@ -291,8 +296,44 @@
     </div>
 </div>
 
-<script>
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    // Inicializa TinyMCE al abrir el modal
+    const editModal = document.getElementById('editGastoModal');
+
+    editModal.addEventListener('shown.bs.modal', function () {
+        // Destruye cualquier instancia previa para evitar duplicados
+        if (tinymce.get("edit_descripcion")) {
+            tinymce.get("edit_descripcion").remove();
+        }
+
+        // Inicializa TinyMCE en el textarea del modal
+        tinymce.init({
+            selector: '#edit_descripcion',
+            height: 300,
+            menubar: 'file edit view insert format tools table help',
+            plugins: 'advlist autolink lists link image charmap print preview anchor ' +
+                     'searchreplace visualblocks code fullscreen insertdatetime media table paste code help wordcount textcolor',
+            toolbar: 'undo redo | formatselect | ' +
+                     'bold italic underline forecolor backcolor | ' +
+                     'alignleft aligncenter alignright alignjustify | ' +
+                     'bullist numlist outdent indent | removeformat | help',
+            branding: false,
+        });
+    });
+
+    // Cuando el modal se cierre, destruye el editor
+    editModal.addEventListener('hidden.bs.modal', function () {
+        if (tinymce.get("edit_descripcion")) {
+            tinymce.get("edit_descripcion").remove();
+        }
+    });
+});
+</script>
+
+
+<script>
     document.addEventListener('DOMContentLoaded', function () {
         document.addEventListener('DOMContentLoaded', function () {
             const modal = document.querySelector('#pdfViewerModal .modal-dialog');

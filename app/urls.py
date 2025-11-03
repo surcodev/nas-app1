@@ -27,7 +27,11 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('logout/', LogoutView.as_view(next_page='/'), name='logout'),
 
-    path('gastos/', include('gastos_generales.urls'))
+    path('gastos/', include('gastos_generales.urls')),
+
+    path('tinymce/', include('tinymce.urls')),
+
+
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

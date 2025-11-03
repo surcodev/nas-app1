@@ -28,6 +28,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'widget_tweaks',
+
+    "django_ckeditor_5",
+    'tinymce',
 ]
 
 MIDDLEWARE = [
@@ -102,6 +105,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = '/static/'
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = BASE_DIR / 'media'
 STATICFILES_DIRS = [ BASE_DIR / "static",]
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 # Default primary key field type
@@ -109,3 +114,17 @@ STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+TINYMCE_DEFAULT_CONFIG = {
+    "height": 400,
+    "width": "100%",
+    "menubar": "file edit view insert format tools table help",
+    "plugins": "advlist autolink lists link image charmap print preview anchor "
+               "searchreplace visualblocks code fullscreen insertdatetime media table paste code help wordcount textcolor",
+    "toolbar": "undo redo | formatselect | "
+               "bold italic underline forecolor backcolor | "
+               "alignleft aligncenter alignright alignjustify | "
+               "bullist numlist outdent indent | removeformat | help",
+    "contextmenu": "link image table",  # clic derecho con opciones
+    "branding": False,  # quita el logo de TinyMCE
+}

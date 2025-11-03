@@ -1,7 +1,10 @@
 from django.db import models
+from django_ckeditor_5.fields import CKEditor5Field  # 👈 importa CKEditor5Field
+from tinymce.models import HTMLField
 
 class Gasto(models.Model):
-    descripcion = models.TextField()
+    # descripcion = models.TextField()
+    descripcion = HTMLField()
     categoria = models.CharField(max_length=50)
     soles = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     dolares = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
