@@ -119,12 +119,17 @@ TINYMCE_DEFAULT_CONFIG = {
     "height": 400,
     "width": "100%",
     "menubar": "file edit view insert format tools table help",
-    "plugins": "advlist autolink lists link image charmap print preview anchor "
-               "searchreplace visualblocks code fullscreen insertdatetime media table paste code help wordcount textcolor",
-    "toolbar": "undo redo | formatselect | "
-               "bold italic underline forecolor backcolor | "
-               "alignleft aligncenter alignright alignjustify | "
-               "bullist numlist outdent indent | removeformat | help",
-    "contextmenu": "link image table",  # clic derecho con opciones
-    "branding": False,  # quita el logo de TinyMCE
+    "plugins": (
+        "advlist autolink lists link image charmap preview anchor "
+        "searchreplace visualblocks code fullscreen insertdatetime media table code help wordcount"
+    ),
+    "toolbar": (
+        "undo redo | blocks | bold italic underline | forecolor backcolor | "
+        "alignleft aligncenter alignright alignjustify | "
+        "bullist numlist outdent indent | removeformat | link image | code | help"
+    ),
+    "contextmenu": "link image table",
+    "branding": False,
+    "promotion": False,  # Quita el banner de Tiny
 }
+
